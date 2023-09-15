@@ -6,7 +6,7 @@ import sys
 from setuptools import find_namespace_packages, setup
 from setuptools.command.install import install
 
-package_name = "dbt-fabric"
+package_name = "dbt-fabric-serverless"
 authors_list = ["Pradeep Srikakolapu"]
 dbt_version = "1.6"
 description = """A Microsoft Fabric Synapse Data Warehouse adapter plugin for dbt"""

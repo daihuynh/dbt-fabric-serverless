@@ -1,23 +1,9 @@
-from dbt.adapters.base import AdapterPlugin
-
-from dbt.adapters.fabric.fabric_adapter import FabricAdapter
-from dbt.adapters.fabric.fabric_column import FabricColumn
-from dbt.adapters.fabric.fabric_configs import FabricConfigs
-from dbt.adapters.fabric.fabric_connection_manager import FabricConnectionManager
-from dbt.adapters.fabric.fabric_credentials import FabricCredentials
-from dbt.include import fabric
+from dbt.adapters.fabric_serverless import FabricServerlessAdapter, FabricServerlessCredentials
+from dbt.include import fabric_serverless
 
 Plugin = AdapterPlugin(
-    adapter=FabricAdapter,
-    credentials=FabricCredentials,
-    include_path=fabric.PACKAGE_PATH,
+    adapter=FabricServerlessAdapter,
+    credentials=FabricServerlessCredentials,
+    include_path=fabric_serverless.PACKAGE_PATH,
+    dependencies=['fabric']
 )
-
-__all__ = [
-    "Plugin",
-    "FabricConnectionManager",
-    "FabricColumn",
-    "FabricAdapter",
-    "FabricCredentials",
-    "FabricConfigs",
-]
