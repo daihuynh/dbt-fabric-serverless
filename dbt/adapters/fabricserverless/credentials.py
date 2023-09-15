@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from dbt.adapters.fabric import FabricCredential
+from dbt.adapters.fabric.fabric_credentials import FabricCredentials
 
 @dataclass
 class FabricServerlessCredentials(FabricCredentials):
