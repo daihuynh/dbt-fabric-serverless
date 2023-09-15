@@ -41,7 +41,7 @@ class FabricCredentials(Credentials):
 
     @property
     def type(self):
-        return "fabric"
+        return "fabric-serverless"
 
     def _connection_keys(self):
         # return an iterator of keys to pretty-print in 'dbt debug'
