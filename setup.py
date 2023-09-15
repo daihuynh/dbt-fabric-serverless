@@ -7,7 +7,7 @@ from setuptools import find_namespace_packages, setup
 from setuptools.command.install import install
 
 package_name = "dbt-fabric-serverless"
-authors_list = ["Pradeep Srikakolapu"]
+authors_list = ["Pradeep Srikakolapu", "Austin Huynh"]
 dbt_version = "1.6"
 description = """A Microsoft Fabric Synapse Data Warehouse adapter plugin for dbt"""
 
@@ -18,7 +18,7 @@ with open(os.path.join(this_directory, "README.md")) as f:
 
 # get this from a separate file
 def _dbt_fabric_version():
-    _version_path = os.path.join(this_directory, "dbt", "adapters", "fabric", "__version__.py")
+    _version_path = os.path.join(this_directory, "dbt", "adapters", "fabric_serverless", "__version__.py")
     _version_pattern = r"""version\s*=\s*["'](.+)["']"""
     with open(_version_path) as f:
         match = re.search(_version_pattern, f.read().strip())
