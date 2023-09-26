@@ -34,7 +34,7 @@ WITH IDENTITY = 'Managed Identity';
 >
 > CREATE EXTERNAL DATA SOURCE [AzureDataLakeSource]
 	WITH (
-		LOCATION = 'abfss://@dlsprd001.dfs.core.windows.net' ,
+		LOCATION = 'abfss://@<storage_account>.dfs.core.windows.net' ,
         CREDENTIAL = SynapseIdentity
 	)
 >
