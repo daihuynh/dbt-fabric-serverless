@@ -1,11 +1,55 @@
-# dbt-fabric
+# dbt-fabric-serverless
 
-[dbt](https://www.getdbt.com) adapter for Microsoft Fabric Synapse Data Warehouse.
+This is a forked version from [dbt-fabric adapter](https://github.com/microsoft/dbt-fabric), which is officially maintained by Microsoft. Since the official adapter does not support Serverless Pool, this fork aims to do it so.
 
-The adapter supports dbt-core 1.4 or newer and follows the same versioning scheme.
-E.g. version 1.1.x of the adapter will be compatible with dbt-core 1.1.x.
+**Disclaimer** - I cannot ensure this adapter would work 100% correct for all cases as I have not tested all features. If you mainly work with view creations and unit testing, it should work well. If you need to create snapshots or create tables from seeds, you will need to wait as I have not changed those materializations to conform the Serverless Pools' capability yet.
+
+## Differences:
+
+Since Serverless Pool does not allow to create tables, this leads to many features have to use "view" alternatively.
+
+- **Test materialization** uses a view as the medium containing testing result instead of a temp table.
+- **External materialization** is supported in this fork by utilizing CETAS (Create External Table As Select) feature in the Serverless Pool. To create an external, you need to declare these properties:
+> - materialized: 'external'
+> - location: '<Relative Azure Blob Storage/Data Lake location>', e.g., 'Folder1/Folder2'
+> - data_source: '<Predefined Data Source>', e.g., 'AzureDataLakeSource'
+> - file_format: '<Predefined External File Format>', e.g., 'SynapseParquetSnappyFormat'
+> 
+> You should predefine those resources by following these steps
+>
+> -- Create credential for the target blob container
+>
+> IF NOT EXISTS (SELECT * FROM sys.credentials WHERE name = 'https://<storage_account>.dfs.core.windows.net/<blob_container>')
+BEGIN
+    CREATE CREDENTIAL [https://<storage_account>.dfs.core.windows.net/<blob_container>]
+        WITH IDENTITY = 'Managed Identity'
+END
+>
+> -- Create Database Credential
+>
+> CREATE DATABASE SCOPED CREDENTIAL SynapseIdentity
+WITH IDENTITY = 'Managed Identity';
+>
+> -- Create External Data Source
+>
+> CREATE EXTERNAL DATA SOURCE [AzureDataLakeSource]
+	WITH (
+		LOCATION = 'abfss://@dlsprd001.dfs.core.windows.net' ,
+        CREDENTIAL = SynapseIdentity
+	)
+>
+> -- Create External File Format: Parquet with Snappy Compression
+>
+> IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseParquetSnappyFormat') 
+	CREATE EXTERNAL FILE FORMAT [SynapseParquetSnappyFormat] 
+	WITH ( FORMAT_TYPE = PARQUET,
+	       DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
+			)
+
 
 ## Documentation
+
+> Setup remains the same as the official adapter
 
 We've bundled all documentation on the dbt docs site
 * [Profile setup & authentication](https://docs.getdbt.com/docs/core/connect-data-platform/fabric-setup)
@@ -30,15 +74,14 @@ sudo apt-get install -y unixodbc-dev
 </p>
 </details>
 
-Latest version: ![PyPI](https://img.shields.io/pypi/v/dbt-fabric?label=latest&logo=pypi)
 
 ```shell
-pip install -U dbt-fabric
+pip install git+https://github.com/daihuynh/dbt-fabric-serverless
 ```
 
 ## Changelog
 
-See [the changelog](CHANGELOG.md)
+See [the changelog from the official adapter](CHANGELOG.md)
 
 ## Contributing
 
