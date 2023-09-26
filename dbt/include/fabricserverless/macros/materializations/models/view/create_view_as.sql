@@ -1,11 +1,11 @@
-{% macro fabric__create_view_as(relation, sql) -%}
-    {{ fabric__create_view_exec(relation, sql) }}
+{% macro fabricserverless__create_view_as(relation, sql) -%}
+    {{ fabricserverless__create_view_exec(relation, sql) }}
 {% endmacro %}
 
-{% macro fabric__create_view_exec(relation, sql) -%}
+{% macro fabricserverless__create_view_exec(relation, sql) -%}
 
     {%- set temp_view_sql = sql.replace("'", "''") -%}
-    {{ use_database_hint() }}
+    {{ use_database_hint(relation.database) }}
 
     {% set contract_config = config.get('contract') %}
     {% if contract_config.enforced %}

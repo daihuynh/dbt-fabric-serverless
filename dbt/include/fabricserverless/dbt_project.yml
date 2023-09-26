@@ -1,4 +1,4 @@
-name: dbt_fabric
+name: dbt_fabric_serverless
 version: 1.0
 
 config-version: 2

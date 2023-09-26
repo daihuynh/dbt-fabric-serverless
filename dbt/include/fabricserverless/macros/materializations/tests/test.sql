@@ -1,11 +1,11 @@
-{%- materialization test, adapter='fabric' -%}
+{%- materialization test, adapter='fabricserverless' -%}
 
   {% set relations = [] %}
 
   {% set identifier = model['alias'] %}
   {% set old_relation = adapter.get_relation(database=database, schema=schema, identifier=identifier) %}
   {% set target_relation = api.Relation.create(
-      identifier=identifier, schema=schema, database=database, type='table') -%} %}
+      identifier=identifier, schema=schema, database=database, type='view') -%} %}
 
 
   {% if old_relation %}
@@ -15,7 +15,7 @@
   {% endif %}
 
   {% call statement(auto_begin=True) %}
-      {{ create_table_as(False, target_relation, sql) }}
+      {{ create_view_as(target_relation, sql) }}
   {% endcall %}
 
   {% set main_sql %}
