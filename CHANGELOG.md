@@ -1,5 +1,74 @@
 # Changelog
 
+### v1.7.3
+
+## Enhancements
+
+* Overwritten view adapter materialization and made improvements.
+* Overwritten table adapter materizalization and made improvements in handling model level constraints
+* Made Constraint name mandatory
+* Added several macros to manage indexes, dropping table dependencies and managing model level constraints
+* Bump dbt-tests-adapter requirement from ~=1.7.3 to ~=1.7.4
+* Bump py-test adapter requirement from ~=pytest==7.4.3 to ~=pytest==7.4.4
+* Bump precommit adapter requirement from ~=pre-commit==3.5.0 to ~=pre-commit==3.6.0
+
+### v1.7.2
+
+## Bug Fixes
+* Addressed issue [#53](https://github.com/microsoft/dbt-fabric/issues/101) - "The server supports a maximum of 2100 parameters" by reducing the batch size by 1 if number of insert value parameters exceed 2100.
+* Added bytearry data type code support along bytes for varbinary sql datatype.
+
+## Enhancements
+* Bump dbt-tests-adapter requirement from ~=1.7.2 to ~=1.7.3
+* Bump actions/setup-python from 4 to 5
+
+### v1.7.1
+
+## Features
+
+* Added capability support structure in fabric adapter
+* Added metadata freshness checks
+* Updated catalog fetch performance improvements to handle relations with many pre-existing objects
+* Added dbt-show support to 1.7.1
+
+## Enhancements
+
+* improve connection manager logging
+* Added metadata freshness checks tests
+* Added capability support tests
+* Added catalog fetch performance improvements
+* Added dbt show's --limit flag tests
+* Added storing test failures tests
+
+### v1.6.1
+
+## Features
+
+* Fabric DW now supports sp_rename. Starting v1.6.1 sp_rename is metadata operation
+* Enabled table clone feature
+
+## Enhancements
+
+* Addressed [Issue 53](https://github.com/microsoft/dbt-fabric/issues/53)
+* Added explicit support for [Issue 76 - ActiveDirectoryServicePrincipal authentication](https://github.com/microsoft/dbt-fabric/issues/74)
+* Removed port number support in connection string as it is no longer required in Microsoft Fabric DW
+* Removed MSI authentication as it does not make sense for Microsoft Fabric.
+* Table lock hints are not supported by Fabric DW
+* Supported authentication modes are ActiveDirectory* and AZ CLI
+
+### v1.7.0
+
+## Features
+
+* Supporting dbt-core 1.7.2
+
+## Dependencies
+
+* Bump from pytest==7.4.2 to pytest==7.4.3
+* Bump from pre-commit==3.4.0 to 3.5.0
+* Bump from dbt-tests-adapter~=1.6.2 to 1.7.2
+* Bump from wheel==0.41.1 to 0.41.1
+
 ### v1.6.0
 
 ## Features

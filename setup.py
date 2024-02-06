@@ -8,7 +8,7 @@ from setuptools.command.install import install
 
 package_name = "dbt-fabric-serverless"
 authors_list = ["Pradeep Srikakolapu", "Austin Huynh"]
-dbt_version = "1.6"
+dbt_version = "1.7"
 description = """A Microsoft Fabric Synapse Data Warehouse adapter plugin for dbt"""
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
@@ -17,7 +17,7 @@ with open(os.path.join(this_directory, "README.md")) as f:
 
 
 # get this from a separate file
-def _dbt_fabric_version():
+def _dbt_fabric_serverless_version():
     _version_path = os.path.join(this_directory, "dbt", "adapters", "fabricserverless", "__version__.py")
     _version_pattern = r"""version\s*=\s*["'](.+)["']"""
     with open(_version_path) as f:
@@ -27,7 +27,7 @@ def _dbt_fabric_version():
         return match.group(1)
 
 
-package_version = _dbt_fabric_version()
+package_version = _dbt_fabric_serverless_version()
 
 # the package version should be the dbt version, with maybe some things on the
 # ends of it. (0.18.1 vs 0.18.1a1, 0.18.1.1, ...)
@@ -66,8 +66,8 @@ setup(
     packages=find_namespace_packages(include=["dbt", "dbt.*"]),
     include_package_data=True,
     install_requires=[
-        "dbt-core~=1.6.2",
-        "dbt-fabric~=1.6",
+        "dbt-core~=1.7",
+        "dbt-fabric~=1.7",
         "pyodbc~=4.0.35,!=4.0.36,!=4.0.37",
         "azure-identity>=1.12.0",
     ],
